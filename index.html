@@ -15,23 +15,26 @@
     </div>
     <div class="input">
         <input class="title" type="text" placeholder="title">
+        <div class="warning" id="no-title"><strong>Please set a title</strong></div>
         <div class="price">
             <div class="first">
-        <input onkeyup="getTotal()" class="number" type="number" id="price" placeholder="price">
-        <input onkeyup="getTotal()" class="number" type="number" id="taxes" placeholder="taxes">
+        <input class="number" onkeyup="getTotal()" type="number" id="price" placeholder="price">
+        <input class="number" onkeyup="getTotal()" type="number" id="taxes" placeholder="taxes">
        </div>
        <div class="second">
-        <input onkeyup="getTotal()" class="number" type="number" id="ads" placeholder="ads">
-        <input onkeyup="getTotal()" class="number" type="number" id="discount" placeholder="discount">
+        <input class="number" onkeyup="getTotal()" type="number" id="ads" placeholder="ads">
+        <input class="number" onkeyup="getTotal()" type="number" id="discount" placeholder="discount">
         </div>
         <small id="total"></small>
     </div>
     <input class="count" type="number" placeholder="count">
+    <div class="warning" id="no-count"><strong>You can't create more than 100 item</strong></div>
     <input class="category" type="text" placeholder="category">
+    <div class="warning" id="no-category"><strong>Please set a category</strong></div>
     <button class="create">Create</button>
     </div>
     <div class="output">
-        <input onkeyup = "searchData(this.value)" class="search" type="text" placeholder="Search">
+        <input onkeyup="searchElement(this.value)" class="search" type="text" placeholder="Search By Title">
         <div class="btn">
             <button onclick = "getSearchMood(this.id)" class="byt" id="searchTitle">Search By Title</button>
             <button onclick = "getSearchMood(this.id)" class="byc" id="searchCategory">Search By Category</button>

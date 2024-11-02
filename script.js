@@ -7,77 +7,95 @@ let total = document.getElementById('total');
 let count = document.querySelector('.count');
 let category = document.querySelector('.category');
 let create = document.querySelector('.create');
+let search = document.querySelector('.search');
+let titleWarning = document.getElementById('no-title');
+let categoryWarning = document.getElementById('no-category');
+let countWarning = document.getElementById('no-count');
 
 let mood = 'create';
 let tmp;
 
 
+//get total
 function getTotal(){
-    if(price.value != ''){
-        let result = (+price.value + +taxes.value + +ads.value)
-        - +discount.value;
-        total.innerHTML = result;
-        total.style.background = '#040';
-    }
-    else{
-        total.innerHTML = '';
-        total.style.background = '#a00d02';
-    }
-
-}
-
-let dataPro;
-if(localStorage.product!=null){
-    dataPro = JSON.parse(localStorage.product)
+if(price.value !== ''){
+    result = (+price.value + +taxes.value + +ads.value) - +discount.value;
+    total.innerHTML = result;
+    total.style.background = '#040';
 }
 else{
-    dataPro = []
+    total.innerHTML = '';
+    total.style.background = '#a00d02';
 }
 
-create.onclick = function(){
+}
+//create product
+let dataPro;
+if(localStorage.product !== undefined && localStorage.product !== null){
+    dataPro = JSON.parse(localStorage.product);
+}
+else{
+    dataPro = [];
+}
+
+create.addEventListener('click', ()=>{
+if(!title.value.trim('')){
+    titleWarning.style.display = 'block';
+    categoryWarning.style.display = 'none';
+
+}
+else if(!category.value.trim('')){
+    categoryWarning.style.display = 'block';
+    titleWarning.style.display = 'none';
+}
+
+else{
+    titleWarning.style.display = 'none';
+    categoryWarning.style.display = 'none';
+
     let newPro = {
         title: title.value.toLowerCase(),
-        price: price.value,
-        taxes: taxes.value,
-        ads: ads.value,
-        discount: discount.value,
-        total: total.innerHTML,
+        price: price.value || 0,
+        taxes: taxes.value || 0,
+        ads: ads.value || 0,
+        discount: discount.value || 0,
+        total: total.innerHTML || 0,
         count: count.value,
         category: category.value.toLowerCase(),
-    }
-    if(title.value != '' && price.value != ''&& newPro.count < 101){
-    if(mood == 'create'){
+    };
+    //count
+if(newPro.count > 100){
+    countWarning.style.display = 'block';
+}
+else{
+    countWarning.style.display = 'none';
+    if(mood === 'create'){
         if(newPro.count > 1){
-            for(let i = 0; i<newPro.count;i++){
-                dataPro.push(newPro);
+            for(let i = 0; i < newPro.count; i++){
+            dataPro.push(newPro);
             }
-        }
-        else{
-        dataPro.push(newPro);
-        }
     }
-
+    else{
+        dataPro.push(newPro);
+    }
+        }
     else{
         dataPro[tmp] = newPro;
         mood = 'create';
         create.innerHTML = 'Create';
         count.style.display = 'block';
     }
-    clearData();
-
-    localStorage.setItem('product',JSON.stringify(dataPro));
+    clearInputs();
+}
+   
+    localStorage.setItem('product', JSON.stringify(dataPro));
     showData();
-}
-else if(title.value == ''){
-    title.focus();
-}
-else if(price.value == ''){
-    price.focus();
-}
-}
 
+    }
+});
 
-function clearData(){
+//clear inputs
+function clearInputs(){
     title.value = '';
     price.value = '';
     taxes.value = '';
@@ -86,14 +104,17 @@ function clearData(){
     total.innerHTML = '';
     count.value = '';
     category.value = '';
-}
+    total.style.background = '#a00d02';
+    
+};
 
-
+//read
 function showData(){
-    getTotal();
     let table = '';
-    for(let i = 0; i<dataPro.length;i++){
-        table +=`
+    for(let i = 0; i < dataPro.length; i++){
+
+        table +=
+        `
         <tr>
         <td>${i+1}</td>
         <td>${dataPro[i].title}</td>
@@ -103,37 +124,42 @@ function showData(){
         <td>${dataPro[i].discount}</td>
         <td>${dataPro[i].total}</td>
         <td>${dataPro[i].category}</td>
-        <td><button onclick = "updateData(${i})" class="update">update</button></td>
-        <td><button onclick = "deleteData(${i})" class="delete">delete</button></td>
-    </tr>`
-        
+        <td><button onclick = "updateData(${i})" id= "update" class= "update">update</button></td>
+        <td><button onclick = "deleteData(${i})" id= "delete" class= "delete">delete</button></td>
+        </tr>
+          
+        `;
     }
+   
 
     document.getElementById('tbody').innerHTML = table;
-    let btnDelete = document.getElementById('deleteAll');
-    if(dataPro.length>0){
-      btnDelete.innerHTML = `<button onclick = "deleteAll()">Delete All(${dataPro.length})</button>`;
+
+    let btnDeleteAll = document.getElementById('deleteAll');
+    if(dataPro.length > 0){
+       btnDeleteAll.innerHTML = 
+         `<button onclick = "deleteAll()">Delete All (${dataPro.length})</button>`;
     }
     else{
-        btnDelete.innerHTML = '';
+    btnDeleteAll.innerHTML = '';
     }
 }
 showData();
 
+//delete data
 function deleteData(i){
-    dataPro.splice(i,1);
-    localStorage.product = JSON.stringify(dataPro);
-    showData();
+     dataPro.splice(i,1);
+     localStorage.product = JSON.stringify(dataPro);
+     showData();
 }
 
-
+//delete all data
 function deleteAll(){
     localStorage.clear();
     dataPro.splice(0);
     showData();
 }
 
-
+//update
 function updateData(i){
     title.value = dataPro[i].title;
     price.value = dataPro[i].price;
@@ -142,42 +168,40 @@ function updateData(i){
     discount.value = dataPro[i].discount;
     getTotal();
     count.style.display = 'none';
-    create.innerHTML = 'Update';
+    category.value = dataPro[i].category;
     mood = 'update';
+    create.innerHTML = 'Update';
     tmp = i;
-    scroll({
+    window.scroll({
         top: 0,
-        behavior: 'smooth',
-    })
-}
-
-let searchMood = 'title';
-
-function getSearchMood(id){
-     let search = document.querySelector('.search');
-     if(id == 'searchTitle'){
-        searchMood = 'title';
-     }
-     else{
-        searchMood = 'category';
-
-     }
-     search.placeholder = 'Search By '+searchMood;
-
-     search.focus();
-     search.value = '';
-     showData();
+        behavior: 'smooth'
+    });
     
 }
+//search
+let searchMood = 'Title';
+function getSearchMood(id){
+    if (id === 'searchTitle'){
+        searchMood = 'Title';
+    }
+    else{
+        searchMood = 'Category';
+    }
+    search.focus();
+    search.value = '';
+    showData();
+    search.placeholder = 'Search By '+ searchMood;
+    }
 
-function searchData(value){
+function searchElement(value){
     let table = '';
-    for(let i = 0; i < dataPro.length; i++){
-    if(searchMood == 'title'){
-        if( dataPro[i].title.includes(value.toLowerCase())){
-            table +=`
+  for(let i = 0; i<dataPro.length;i++){
+    if(searchMood === 'Title'){
+        if(dataPro[i].title.includes(value.toLowerCase())){
+            table +=
+            `
             <tr>
-            <td>${i}</td>
+            <td>${i+1}</td>
             <td>${dataPro[i].title}</td>
             <td>${dataPro[i].price}</td>
             <td>${dataPro[i].taxes}</td>
@@ -185,42 +209,36 @@ function searchData(value){
             <td>${dataPro[i].discount}</td>
             <td>${dataPro[i].total}</td>
             <td>${dataPro[i].category}</td>
-            <td><button onclick = "updateData(${i})" class="update">update</button></td>
-            <td><button onclick = "deleteData(${i})" class="delete">delete</button></td>
-        </tr>`
+            <td><button onclick = "updateData(${i})" id= "update">update</button></td>
+            <td><button onclick = "deleteData(${i})" id= "delete">delete</button></td>
+            </tr>
+              
+            `;
         }
-       
     }
     else{
-        
-            if( dataPro[i].category.includes(value.toLowerCase())){
-                table +=`
-                <tr>
-                <td>${i}</td>
-                <td>${dataPro[i].title}</td>
-                <td>${dataPro[i].price}</td>
-                <td>${dataPro[i].taxes}</td>
-                <td>${dataPro[i].ads}</td>
-                <td>${dataPro[i].discount}</td>
-                <td>${dataPro[i].total}</td>
-                <td>${dataPro[i].category}</td>
-                <td><button onclick = "updateData(${i})" class="update">update</button></td>
-                <td><button onclick = "deleteData(${i})" class="delete">delete</button></td>
-            </tr>`
-            }
-           
+        if(dataPro[i].category.includes(value.toLowerCase())){
+            table +=
+            `
+            <tr>
+            <td>${i+1}</td>
+            <td>${dataPro[i].title}</td>
+            <td>${dataPro[i].price}</td>
+            <td>${dataPro[i].taxes}</td>
+            <td>${dataPro[i].ads}</td>
+            <td>${dataPro[i].discount}</td>
+            <td>${dataPro[i].total}</td>
+            <td>${dataPro[i].category}</td>
+            <td><button onclick = "updateData(${i})" id= "update">update</button></td>
+            <td><button onclick = "deleteData(${i})" id= "delete">delete</button></td>
+            </tr>
+              
+            `;
+        }
     }
-}
-    document.getElementById('tbody').innerHTML = table;
+  }
+  document.getElementById('tbody').innerHTML = table;
+
 }
 
 
-//get total
-//create product
-//save localstorage
-//clear inputs
-//read
-//count
-//update
-//search
-//clean data
