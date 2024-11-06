@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 :root{
     --primaryColor: #000000;
     --secondaryColor: rgb(95, 15, 95);
@@ -7,7 +14,8 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     scroll-behavior: smooth;
     font-family: monospace;
 }
@@ -15,9 +23,16 @@ body{
     background: var(--bgColor);
 }
 .heading{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     margin-top: 30px;
     line-height: 30px;
 }
@@ -43,26 +58,59 @@ body{
 .input .title:focus{
     background: var(--bgColor);
 }
+.title::-webkit-input-placeholder{
+    color: whitesmoke;
+}
+.title::-moz-placeholder{
+    color: whitesmoke;
+}
+.title:-ms-input-placeholder{
+    color: whitesmoke;
+}
+.title::-ms-input-placeholder{
+    color: whitesmoke;
+}
 .title::placeholder{
     color: whitesmoke;
 }
 .price{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     margin-top: 10px;
     height: 100px;
 }
 .price .first{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     width: 100%;
 }
 .price .second{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 .number{
     width: 45%;
@@ -71,12 +119,26 @@ body{
     padding-left: 3px;
     
 }
+.number::-webkit-input-placeholder{
+    color: whitesmoke;
+}
+.number::-moz-placeholder{
+    color: whitesmoke;
+}
+.number:-ms-input-placeholder{
+    color: whitesmoke;
+}
+.number::-ms-input-placeholder{
+    color: whitesmoke;
+}
 .number::placeholder{
     color: whitesmoke;
 }
 input:focus{
     background:var(--primaryColor);
-    transform: scale(1.02);
+    -webkit-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+            transform: scale(1.02);
 }
 input{
     color: whitesmoke;
@@ -98,6 +160,18 @@ input{
     padding-left: 3px;
     margin-top: 5px;
 }
+.category::-webkit-input-placeholder{
+    color: whitesmoke;
+}
+.category::-moz-placeholder{
+    color: whitesmoke;
+}
+.category:-ms-input-placeholder{
+    color: whitesmoke;
+}
+.category::-ms-input-placeholder{
+    color: whitesmoke;
+}
 .category::placeholder{
     color: whitesmoke;
 }
@@ -107,6 +181,18 @@ input{
     background: var(--thirdColor);
     padding-left: 3px;
     margin-top: 5px;
+}
+.count::-webkit-input-placeholder{
+    color: whitesmoke;
+}
+.count::-moz-placeholder{
+    color: whitesmoke;
+}
+.count:-ms-input-placeholder{
+    color: whitesmoke;
+}
+.count::-ms-input-placeholder{
+    color: whitesmoke;
 }
 .count::placeholder{
     color: whitesmoke;
@@ -119,6 +205,8 @@ input{
     color: whitesmoke;
     margin-top: 5px;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
     font-size: 16px;
 }
@@ -137,13 +225,32 @@ input{
     padding-left: 3px;
     margin-top: 5px;
 }
+.search::-webkit-input-placeholder{
+    color: whitesmoke;
+}
+.search::-moz-placeholder{
+    color: whitesmoke;
+}
+.search:-ms-input-placeholder{
+    color: whitesmoke;
+}
+.search::-ms-input-placeholder{
+    color: whitesmoke;
+}
 .search::placeholder{
     color: whitesmoke;
 }
 .btn{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 .byt{
     font-size: 12px;
@@ -155,6 +262,8 @@ input{
     border-radius: 10px;
     color: whitesmoke;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
 }
 .byc{
@@ -167,6 +276,8 @@ input{
     border-radius: 10px;
     color: whitesmoke;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
 }
 .byt:hover{
@@ -197,6 +308,8 @@ table td{
     color: whitesmoke;
     margin-top: 5px;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
 }
 .update:hover{
@@ -209,6 +322,8 @@ table td{
     color: whitesmoke;
     margin-top: 5px;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
 }
 .delete:hover{
@@ -223,6 +338,8 @@ button{
     color: whitesmoke;
     margin-top: 5px;
     cursor: pointer;
+    -webkit-transition: 0.4s ease;
+    -o-transition: 0.4s ease;
     transition: 0.4s ease;
     font-size: 17px;
 }
@@ -328,5 +445,4 @@ button:hover{
         font-size: 16px;
     }
 }
-
 
